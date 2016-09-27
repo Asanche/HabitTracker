@@ -18,10 +18,6 @@ public class MainActivity extends AppCompatActivity
 
         super.onCreate(savedInstanceState);
 
-        Log.d("Debug", R.class.toString());
-
         mainLayoutController.init();
-
-        setContentView(R.layout.activity_main);
     }
 }

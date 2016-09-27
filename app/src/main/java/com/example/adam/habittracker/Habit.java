@@ -48,4 +48,12 @@ public class Habit
     {
         this.history = history;
     }
+
+    @Override
+    public String toString()
+    {
+        String completedString = "Completed: ";
+        return this.name + " | " + completedString;
+    }
+
 }

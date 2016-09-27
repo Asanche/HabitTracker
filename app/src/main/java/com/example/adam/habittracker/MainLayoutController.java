@@ -36,6 +36,7 @@ public class MainLayoutController
 
     private void getHabitList(Calendar calendar)
     {
+        Log.i("trace", "MainLayoutController getHabitList");
         currentDay.addHabit(new Habit("Clean my immense China collection"));
         calendar.get(Calendar.DAY_OF_WEEK);
         //ListView incompleteHabits = (ListView) mainActivity.findViewById(R.id.incompleteHabitsList);
@@ -43,15 +44,17 @@ public class MainLayoutController
 
         habitList = currentDay.getHabits();
         adapter = new ArrayAdapter<Habit>(mainActivity, R.layout.list_item, habitList);
-        Log.d("DEBUG", new Boolean(habitListView == null).toString());
+
         habitListView.setAdapter(adapter);
     }
 
     private void setDate(Calendar calendar)
     {
+        Log.i("trace", "MainLayoutController setDate");
+
         TextView displayedDateElement = (TextView)mainActivity.findViewById(R.id.currentDate);
 
-        Log.d("WEEEEE", new SimpleDateFormat("EEEE, d MMMM yyyy").format(calendar.getTime()));
+        Log.i("info", "Main scene date set to" + new SimpleDateFormat("EEEE, d MMMM yyyy").format(calendar.getTime()));
 
         displayedDateElement.setText(new SimpleDateFormat("EEEE, d MMMM yyyy").format(calendar.getTime()));
     }
