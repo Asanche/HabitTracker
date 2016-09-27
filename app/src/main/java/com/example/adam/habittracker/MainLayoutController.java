@@ -3,6 +3,8 @@ package com.example.adam.habittracker;
 import android.app.Activity;
 import android.text.Layout;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -18,8 +20,8 @@ public class MainLayoutController
 {
     private Activity mainActivity;
     private Day currentDay = new Day(Calendar.getInstance().get(Calendar.DAY_OF_WEEK));
-    private ListView habitListView;
-    private ArrayList<Habit> habitList = new ArrayList<Habit>();
+    private ListView incompleteHabitListView;
+    private ArrayList<Habit> incompleteHabitList = new ArrayList<Habit>();
     private ArrayAdapter<Habit> adapter;
 
     public MainLayoutController(Activity activity)
@@ -40,13 +42,31 @@ public class MainLayoutController
         currentDay.addHabit(new Habit("Clean my immense China collection"));
         calendar.get(Calendar.DAY_OF_WEEK);
         //ListView incompleteHabits = (ListView) mainActivity.findViewById(R.id.incompleteHabitsList);
-        ListView habitListView = (ListView) mainActivity.findViewById(R.id.completeHabitsList);
+        incompleteHabitListView = (ListView) mainActivity.findViewById(R.id.incompleteHabitsList);
 
-        habitList = currentDay.getHabits();
-        adapter = new ArrayAdapter<Habit>(mainActivity, R.layout.list_item, habitList);
+        incompleteHabitList = currentDay.getHabits();
+        adapter = new ArrayAdapter<Habit>(mainActivity, R.layout.list_item, incompleteHabitList);
 
-        habitListView.setAdapter(adapter);
+        setHabitClickEvents(incompleteHabitListView);
+
+
+        incompleteHabitListView.setAdapter(adapter);
     }
+
+    private void setHabitClickEvents(ListView habitListView)
+    {
+
+        habitListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
+            @Override
+            public void onItemClick(AdapterView<?>adapter,View v, int position, long id)
+            {
+                Log.d("DEBUG", adapter.getItemAtPosition(position).toString());
+            }
+        });
+    }
+
+
 
     private void setDate(Calendar calendar)
     {
@@ -56,6 +76,6 @@ public class MainLayoutController
 
         Log.i("info", "Main scene date set to" + new SimpleDateFormat("EEEE, d MMMM yyyy").format(calendar.getTime()));
 
-        displayedDateElement.setText(new SimpleDateFormat("EEEE, d MMMM yyyy").format(calendar.getTime()));
+        displayedDateElement.setText(new SimpleDateFormat("EEEE, d MMMM yyyy").format(calendar.getTime()) + "\n");
     }
 }

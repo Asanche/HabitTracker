@@ -20,17 +20,21 @@
     <ListView
         android:id="@+id/incompleteHabitsList"
         android:layout_width="fill_parent"
-        android:layout_height="150dp"
+        android:layout_height="225dp"
         android:layout_weight="1"
-        android:scrollbars="vertical" >
+        android:scrollbars="vertical"
+        android:layout_below="@+id/currentDate"
+        android:layout_alignParentStart="true">
     </ListView>
 
     <ListView
         android:id="@+id/completeHabitsList"
         android:layout_width="fill_parent"
-        android:layout_height="100dp"
+        android:layout_height="175dp"
         android:layout_weight="1"
-        android:scrollbars="vertical" >
+        android:scrollbars="vertical"
+        android:layout_below="@+id/incompleteHabitsList"
+        android:layout_alignParentStart="true">
     </ListView>
 
 </RelativeLayout>
