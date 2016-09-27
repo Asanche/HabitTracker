@@ -10,8 +10,14 @@ public class Habit
 {
     private Date creationDate;
     private String name;
-    private ArrayList<Day> occuranceDays;
     private ArrayList<habitHistoryElement> history;
+
+    public Habit(String name)
+    {
+        this.name = name;
+        this.creationDate = new Date();
+    }
+
 
     public Date getCreationDate()
     {
@@ -31,16 +37,6 @@ public class Habit
     public void setName(String name)
     {
         this.name = name;
-    }
-
-    public ArrayList<Day> getOccuranceDays()
-    {
-        return occuranceDays;
-    }
-
-    public void setOccuranceDays(ArrayList<Day> occuranceDays)
-    {
-        this.occuranceDays = occuranceDays;
     }
 
     public ArrayList<habitHistoryElement> getHistory()

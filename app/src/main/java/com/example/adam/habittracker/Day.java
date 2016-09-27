@@ -1,39 +1,49 @@
 package com.example.adam.habittracker;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+
 /**
  * Created by Adam on 9/21/2016.
  */
 public class Day
 {
-    public Day(int dayNumber)
+    private int dayNumber;
+    private String fullName;
+    private ArrayList<Habit> habits;
+
+    public Day(int dayOfWeek)
     {
-        if(dayNumber > 0 && dayNumber < 8)
+        this.habits = new ArrayList<Habit>();
+        if(dayOfWeek > 0 && dayOfWeek < 8)
         {
             this.dayNumber = dayNumber;
-            switch (dayNumber)
+            switch (dayOfWeek)
             {
-                case 1:
+                case Calendar.SUNDAY:
                     fullName = "Sunday";
                     break;
-                case 2:
+                case Calendar.MONDAY:
                     fullName = "Monday";
                     break;
-                case 3:
+                case Calendar.TUESDAY:
                     fullName = "Tuesday";
                     break;
-                case 4:
+                case Calendar.WEDNESDAY:
                     fullName = "Wednesday";
                     break;
-                case 5:
+                case Calendar.THURSDAY:
                     fullName = "Thursday";
                     break;
-                case 6:
+                case Calendar.FRIDAY:
                     fullName = "Friday";
                     break;
-                case 7:
+                case Calendar.SATURDAY:
                     fullName = "Saturday";
                     break;
             }
+
+            this.populateHabits(dayOfWeek);
         }
         else
         {
@@ -41,6 +51,18 @@ public class Day
         }
     }
 
-    private int dayNumber;
-    private String fullName;
+    private void populateHabits(int dayofWeek)
+    {
+        //deserialize habits from GSON to habits ArrayList...
+    }
+
+    public void addHabit(Habit habit)
+    {
+        this.habits.add(habit);
+    }
+
+    public ArrayList<Habit> getHabits()
+    {
+        return habits;
+    }
 }
