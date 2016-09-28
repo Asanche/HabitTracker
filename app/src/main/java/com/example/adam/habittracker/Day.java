@@ -10,14 +10,12 @@ public class Day
 {
     private int dayNumber;
     private String fullName;
-    private ArrayList<Habit> habits;
 
     public Day(int dayOfWeek)
     {
-        this.habits = new ArrayList<Habit>();
         if(dayOfWeek > 0 && dayOfWeek < 8)
         {
-            this.dayNumber = dayNumber;
+            this.dayNumber = dayOfWeek;
             switch (dayOfWeek)
             {
                 case Calendar.SUNDAY:
@@ -42,8 +40,6 @@ public class Day
                     fullName = "Saturday";
                     break;
             }
-
-            this.populateHabits(dayOfWeek);
         }
         else
         {
@@ -51,18 +47,44 @@ public class Day
         }
     }
 
-    private void populateHabits(int dayofWeek)
+    public static ArrayList<Day> getMultipleDays(int[] daysOfWeek)
     {
-        //deserialize habits from GSON to habits ArrayList...
+        ArrayList<Day> days = new ArrayList<Day>();
+        for(int day : daysOfWeek)
+        {
+            days.add(new Day(day));
+        }
+
+        return days;
     }
 
-    public void addHabit(Habit habit)
+    @Override
+    public boolean equals(Object o)
     {
-        this.habits.add(habit);
+        if (this == o)
+        {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass())
+        {
+            return false;
+        }
+
+        Day day = (Day) o;
+
+        if (dayNumber != day.dayNumber)
+        {
+            return false;
+        }
+        return fullName != null ? fullName.equals(day.fullName) : day.fullName == null;
+
     }
 
-    public ArrayList<Habit> getHabits()
+    @Override
+    public int hashCode()
     {
-        return habits;
+        int result = dayNumber;
+        result = 31 * result + (fullName != null ? fullName.hashCode() : 0);
+        return result;
     }
 }

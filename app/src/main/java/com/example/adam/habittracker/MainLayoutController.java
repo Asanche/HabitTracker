@@ -18,11 +18,15 @@ import java.util.Calendar;
  */
 public class MainLayoutController
 {
+    private CurrentHabitsController habitsController = CurrentHabitsController.getInstance();
+
     private Activity mainActivity;
-    private Day currentDay = new Day(Calendar.getInstance().get(Calendar.DAY_OF_WEEK));
+
+    private ListView completeHabitListView;
     private ListView incompleteHabitListView;
-    private ArrayList<Habit> incompleteHabitList = new ArrayList<Habit>();
-    private ArrayAdapter<Habit> adapter;
+
+    private ArrayAdapter<Habit> completeAdapter;
+    private ArrayAdapter<Habit> incompleteAdapter;
 
     public MainLayoutController(Activity activity)
     {
@@ -31,6 +35,10 @@ public class MainLayoutController
 
     public void init()
     {
+        Log.i("trace", "MainLayoutController init");
+        ArrayList<Habit> completeHabitList = new ArrayList<Habit>();
+        ArrayList<Habit> incompleteHabitList = new ArrayList<Habit>();
+
         Calendar currentDate = Calendar.getInstance();
         setDate(currentDate);
         getHabitList(currentDate);
@@ -39,29 +47,37 @@ public class MainLayoutController
     private void getHabitList(Calendar calendar)
     {
         Log.i("trace", "MainLayoutController getHabitList");
-        currentDay.addHabit(new Habit("Clean my immense China collection"));
-        calendar.get(Calendar.DAY_OF_WEEK);
-        //ListView incompleteHabits = (ListView) mainActivity.findViewById(R.id.incompleteHabitsList);
-        incompleteHabitListView = (ListView) mainActivity.findViewById(R.id.incompleteHabitsList);
 
-        incompleteHabitList = currentDay.getHabits();
-        adapter = new ArrayAdapter<Habit>(mainActivity, R.layout.list_item, incompleteHabitList);
+        int[] days = {Calendar.MONDAY, Calendar.TUESDAY};
+        Habit newHabit = new Habit("Topple the Russian Oligarchical system", Day.getMultipleDays(days));
+        habitsController.addHabit(newHabit);
+
+        incompleteHabitListView = (ListView) mainActivity.findViewById(R.id.incompleteHabitsList);
+        completeHabitListView = (ListView) mainActivity.findViewById(R.id.completeHabitsList);
+
+        incompleteAdapter = new ArrayAdapter<Habit>(mainActivity, R.layout.list_item, habitsController.getIncompleteHabits());
+        completeAdapter = new ArrayAdapter<Habit>(mainActivity, R.layout.list_item, habitsController.getCompleteHabits());
 
         setHabitClickEvents(incompleteHabitListView);
 
-
-        incompleteHabitListView.setAdapter(adapter);
+        completeHabitListView.setAdapter(completeAdapter);
+        incompleteHabitListView.setAdapter(incompleteAdapter);
     }
 
-    private void setHabitClickEvents(ListView habitListView)
+    private void setHabitClickEvents(final ListView incompleteHabitListView)
     {
 
-        habitListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        incompleteHabitListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
             @Override
             public void onItemClick(AdapterView<?>adapter,View v, int position, long id)
             {
-                Log.d("DEBUG", adapter.getItemAtPosition(position).toString());
+                Habit selectedHabit = (Habit)adapter.getItemAtPosition(position);
+                selectedHabit.complete();
+
+                habitsController.updateCurrentHabits();
+                incompleteAdapter.notifyDataSetChanged();
+                completeAdapter.notifyDataSetChanged();
             }
         });
     }
