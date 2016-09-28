@@ -5,9 +5,9 @@ import java.util.Date;
 /**
  * Created by Adam on 9/21/2016.
  */
-public class habitHistoryElement
+public class HabitHistoryElement
 {
-    public habitHistoryElement(Boolean completed)
+    public HabitHistoryElement(Boolean completed)
     {
         this.completed = completed;
         this.date = new Date();

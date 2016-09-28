@@ -1,6 +1,5 @@
 package com.example.adam.habittracker;
 
-import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,7 +19,8 @@ import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity
 {
-    private CurrentHabitsController habitsController = CurrentHabitsController.getInstance();
+    private HabitListController habitsController = HabitListController.getInstance();
+    private CompletionListController completionListController = CompletionListController.getInstance();
 
     private ListView completeHabitListView;
     private ListView incompleteHabitListView;
@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity
 
         super.onCreate(savedInstanceState);
 
-        habitsController.init();
+        habitsController.updateCurrentHabits();
         init();
     }
 
@@ -117,6 +117,7 @@ public class MainActivity extends AppCompatActivity
             {
                 Habit selectedHabit = (Habit)adapter.getItemAtPosition(position);
                 selectedHabit.complete();
+                completionListController.newCompletion(selectedHabit);
 
                 habitsController.updateCurrentHabits();
                 incompleteAdapter.notifyDataSetChanged();

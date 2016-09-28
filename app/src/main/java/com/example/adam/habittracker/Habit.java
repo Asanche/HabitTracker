@@ -11,7 +11,7 @@ public class Habit
     private Date creationDate;
     private String name;
     private ArrayList<Day> days;
-    private ArrayList<habitHistoryElement> history;
+    private ArrayList<HabitHistoryElement> history;
     private Boolean complete = false;
 
     public Habit(String name, ArrayList<Day> days)
@@ -56,12 +56,12 @@ public class Habit
         this.name = name;
     }
 
-    public ArrayList<habitHistoryElement> getHistory()
+    public ArrayList<HabitHistoryElement> getHistory()
     {
         return history;
     }
 
-    public void setHistory(ArrayList<habitHistoryElement> history)
+    public void setHistory(ArrayList<HabitHistoryElement> history)
     {
         this.history = history;
     }
