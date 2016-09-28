@@ -47,7 +47,7 @@ public class Day
         }
     }
 
-    public static ArrayList<Day> getMultipleDays(int[] daysOfWeek)
+    public static ArrayList<Day> getMultipleDays(ArrayList<Integer> daysOfWeek)
     {
         ArrayList<Day> days = new ArrayList<Day>();
         for(int day : daysOfWeek)
