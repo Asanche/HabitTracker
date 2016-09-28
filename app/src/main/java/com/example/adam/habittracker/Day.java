@@ -58,6 +58,11 @@ public class Day
         return days;
     }
 
+    public String getFullName()
+    {
+        return fullName;
+    }
+
     @Override
     public boolean equals(Object o)
     {

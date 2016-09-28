@@ -66,13 +66,17 @@ public class Habit
         this.history = history;
     }
 
+    public ArrayList<Day> getDays()
+    {
+        return days;
+    }
+
     @Override
     public String toString()
     {
         String completedString = (complete) ? "Complete!" : "Not Complete...";
         return this.name + " \n " + completedString;
     }
-
 
     //TODO: Handle Multiples.
     @Override
