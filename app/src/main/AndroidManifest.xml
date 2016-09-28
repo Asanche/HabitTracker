@@ -15,7 +15,9 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".AllHabits">
+        <activity android:name=".AllHabitsActivity">
+        </activity>
+        <activity android:name=".AddHabitActivity">
         </activity>
     </application>
 

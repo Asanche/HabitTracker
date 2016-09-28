@@ -1,20 +1,12 @@
 package com.example.adam.habittracker;
 
-import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.widget.AdapterView;
-import android.widget.ListView;
-import android.view.View;
+import android.view.MenuItem;
 import android.content.Intent;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
 {
@@ -40,5 +32,22 @@ public class MainActivity extends AppCompatActivity
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.mainmenu, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.all:
+                Intent intentAll = new Intent(this, AllHabitsActivity.class);
+                startActivity(intentAll);
+                return true;
+            case R.id.add:
+                Intent intentAdd = new Intent(this, AddHabitActivity.class);
+                startActivity(intentAdd);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

@@ -69,8 +69,8 @@ public class Habit
     @Override
     public String toString()
     {
-        String completedString = "Completed: ";
-        return this.name + " | " + completedString;
+        String completedString = (complete) ? "Complete!" : "Not Complete...";
+        return this.name + " \n " + completedString;
     }
 
 
