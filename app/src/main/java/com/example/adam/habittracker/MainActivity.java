@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity
 
         super.onCreate(savedInstanceState);
 
+        habitsController.setMainActivity(this);
         habitsController.updateCurrentHabits();
         init();
     }
@@ -87,13 +88,6 @@ public class MainActivity extends AppCompatActivity
     private void getHabitList(Calendar calendar)
     {
         Log.i("trace", "MainLayoutController getHabitList");
-
-        ArrayList<Integer> days = new ArrayList<Integer>();
-        days.add(Calendar.SATURDAY);
-        days.add(Calendar.MONDAY);
-
-        Habit newHabit = new Habit("Topple the Russian Oligarchical system", Day.getMultipleDays(days));
-        habitsController.addHabit(newHabit);
 
         incompleteHabitListView = (ListView)findViewById(R.id.incompleteHabitsList);
         completeHabitListView = (ListView)findViewById(R.id.completeHabitsList);
