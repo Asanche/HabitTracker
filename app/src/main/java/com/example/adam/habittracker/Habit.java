@@ -92,7 +92,7 @@ public class Habit implements Serializable
             daysString +=(day.getFullName() + ", ");
         }
 
-        return daysString;
+        return daysString.substring(0, daysString.length() - 2);
     }
 
     @Override
