@@ -1,5 +1,6 @@
 package com.example.adam.habittracker;
 
+import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity
     private ArrayAdapter<Habit> incompleteAdapter;
 
     private Habit contextHabit;
+    private Activity mainActivity = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -84,7 +86,7 @@ public class MainActivity extends AppCompatActivity
         AdapterView.AdapterContextMenuInfo acmi = (AdapterView.AdapterContextMenuInfo) menuInfo;
         contextHabit = (Habit)((ListView)v).getItemAtPosition(acmi.position);
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main_habit_context, menu);
+        inflater.inflate(R.menu.habit_context, menu);
     }
 
     @Override
@@ -92,6 +94,7 @@ public class MainActivity extends AppCompatActivity
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         switch (item.getItemId()) {
             case R.id.history:
+                completionListController.openHabitHistory(this, contextHabit);
                 return true;
             case R.id.delete:
                 Log.i("info", "Habit " + contextHabit.getName() + "selected for uncomplete.");
@@ -151,25 +154,21 @@ public class MainActivity extends AppCompatActivity
                 completeAdapter.notifyDataSetChanged();
             }
         });
-
-        registerForContextMenu(incompleteHabitListView);
         registerForContextMenu(completeHabitListView);
 
-//        completeHabitListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener()
-//        {
-//            @Override
-//            public boolean onItemLongClick(AdapterView<?>adapter, View v, int position, long id)
-//            {
-//                Habit selectedHabit = (Habit)adapter.getItemAtPosition(position);
-//                selectedHabit.unComplete();
-//                completionListController.newCompletion(selectedHabit);
-//
-//                habitsController.updateHabits();
-//                incompleteAdapter.notifyDataSetChanged();
-//                completeAdapter.notifyDataSetChanged();
-//                return true;
-//            }
-//        });
+        incompleteHabitListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener()
+        {
+            @Override
+            public boolean onItemLongClick(AdapterView<?>adapter, View v, int position, long id)
+            {
+                Habit selectedHabit = (Habit)adapter.getItemAtPosition(position);
+                selectedHabit.unComplete();
+                completionListController.newCompletion(selectedHabit);
+
+                completionListController.openHabitHistory(mainActivity, contextHabit);
+                return true;
+            }
+        });
     }
 
     private void setDate(Calendar calendar)
