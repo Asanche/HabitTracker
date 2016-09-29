@@ -1,5 +1,7 @@
 package com.example.adam.habittracker;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -28,7 +30,14 @@ public class Habit
 
     public void complete()
     {
+        Log.i("info", "completing habit " + this.name);
         this.complete = true;
+    }
+
+    public void unComplete()
+    {
+        Log.i("info", "uncompleting habit " + this.name);
+        this.complete = false;
     }
 
     public Boolean isComplete()
