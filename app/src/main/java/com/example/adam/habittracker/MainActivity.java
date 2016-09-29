@@ -22,7 +22,6 @@ import java.util.Calendar;
 public class MainActivity extends AppCompatActivity
 {
     private HabitListController habitsController = HabitListController.getInstance();
-    private CompletionListController completionListController = CompletionListController.getInstance();
 
     private ListView completeHabitListView;
     private ListView incompleteHabitListView;
@@ -94,7 +93,7 @@ public class MainActivity extends AppCompatActivity
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         switch (item.getItemId()) {
             case R.id.history:
-                completionListController.openHabitHistory(this, contextHabit);
+                openHabitHistory();
                 return true;
             case R.id.delete:
                 Log.i("info", "Habit " + contextHabit.getName() + "selected for uncomplete.");
@@ -147,7 +146,6 @@ public class MainActivity extends AppCompatActivity
             {
                 Habit selectedHabit = (Habit)adapter.getItemAtPosition(position);
                 selectedHabit.complete();
-                completionListController.newCompletion(selectedHabit);
 
                 habitsController.updateHabits();
                 incompleteAdapter.notifyDataSetChanged();
@@ -163,9 +161,8 @@ public class MainActivity extends AppCompatActivity
             {
                 Habit selectedHabit = (Habit)adapter.getItemAtPosition(position);
                 selectedHabit.unComplete();
-                completionListController.newCompletion(selectedHabit);
 
-                completionListController.openHabitHistory(mainActivity, contextHabit);
+                openHabitHistory();
                 return true;
             }
         });
@@ -180,5 +177,12 @@ public class MainActivity extends AppCompatActivity
         Log.i("info", "Main scene date set to" + new SimpleDateFormat("EEEE, d MMMM yyyy").format(calendar.getTime()));
 
         displayedDateElement.setText(new SimpleDateFormat("EEEE, d MMMM yyyy").format(calendar.getTime()) + "\n");
+    }
+
+    public void openHabitHistory()
+    {
+        Intent intentHistory = new Intent(this, HabitHistoryActivity.class);
+        intentHistory.putExtra("Habit", contextHabit);
+        startActivity(intentHistory);
     }
 }

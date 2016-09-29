@@ -1,12 +1,13 @@
 package com.example.adam.habittracker;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 
 /**
  * Created by Adam on 9/21/2016.
  */
-public class Day
+public class Day implements Serializable
 {
     private int dayNumber;
     private String fullName;

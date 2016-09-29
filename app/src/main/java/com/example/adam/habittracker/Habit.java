@@ -2,13 +2,14 @@ package com.example.adam.habittracker;
 
 import android.util.Log;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
 /**
  * Created by Adam on 9/21/2016.
  */
-public class Habit
+public class Habit implements Serializable
 {
     private Date creationDate;
     private String name;
@@ -21,17 +22,24 @@ public class Habit
         this.days = days;
         this.name = name;
         this.creationDate = new Date();
-    }
-
-    public static ArrayList<Habit> getAllHabits()
-    {
-        return null;
+        history = new ArrayList<HabitHistoryElement>();
     }
 
     public void complete()
     {
         Log.i("info", "completing habit " + this.name);
         this.complete = true;
+        addToHistory();
+    }
+
+    private void addToHistory()
+    {
+        history.add(new HabitHistoryElement(this.complete, this.name));
+    }
+
+    public void removeFromHistory(HabitHistoryElement historyElement)
+    {
+        history.remove(historyElement);
     }
 
     public void unComplete()
@@ -70,14 +78,21 @@ public class Habit
         return history;
     }
 
-    public void setHistory(ArrayList<HabitHistoryElement> history)
-    {
-        this.history = history;
-    }
-
     public ArrayList<Day> getDays()
     {
         return days;
+    }
+
+    public String daysToString()
+    {
+        String daysString = new String();
+
+        for(Day day : days)
+        {
+            daysString +=(day.getFullName() + ", ");
+        }
+
+        return daysString;
     }
 
     @Override
