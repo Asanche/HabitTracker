@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity
     protected void onResume()
     {
         super.onResume();
+        habitsController.updateHabits();
         completeAdapter.notifyDataSetChanged();
         incompleteAdapter.notifyDataSetChanged();
     }
@@ -182,7 +183,7 @@ public class MainActivity extends AppCompatActivity
     public void openHabitHistory()
     {
         Intent intentHistory = new Intent(this, HabitHistoryActivity.class);
-        intentHistory.putExtra("Habit", contextHabit);
+        habitsController.setHistoryHabit(contextHabit);
         startActivity(intentHistory);
     }
 }
