@@ -18,42 +18,24 @@
     />
 
     <ListView
-        android:id="@+id/incompleteHabitsList"
+        android:id="@+id/canCompleteHabitsList"
         android:layout_width="fill_parent"
         android:layout_height="175dp"
         android:layout_weight="1"
         android:scrollbars="vertical"
-        android:layout_above="@+id/textView2"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="45dp">
-    </ListView>
-
-    <ListView
-        android:id="@+id/completeHabitsList"
-        android:layout_width="fill_parent"
-        android:layout_height="175dp"
-        android:layout_weight="1"
-        android:scrollbars="vertical"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/textView">
     </ListView>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="To Do:"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Today's Habits"
         android:id="@+id/textView"
-        android:layout_above="@+id/incompleteHabitsList"
-        android:layout_alignParentStart="true"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Complete:"
-        android:id="@+id/textView2"
-        android:layout_above="@+id/completeHabitsList"
-        android:layout_alignParentStart="true"/>
+        android:layout_below="@+id/currentDate"
+        android:layout_centerHorizontal="true"/>
 
 </RelativeLayout>

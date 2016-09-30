@@ -23,7 +23,7 @@ public class HabitHistoryElement implements Serializable
     public String toString()
     {
         String completedString = (complete) ? " completed " : " incomplete ";
-        return this.name + completedString + "on " + new SimpleDateFormat("EEEE, d MMMM yyyy").format(date);
+        return this.name + completedString + "on " + new SimpleDateFormat("EEEE, d MMMM, yyyy, hh:mm aa").format(date);
     }
 
     public Date getDate()

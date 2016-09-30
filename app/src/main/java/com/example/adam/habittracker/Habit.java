@@ -41,6 +41,10 @@ public class Habit implements Serializable
     public void removeFromHistory(HabitHistoryElement historyElement)
     {
         history.remove(historyElement);
+        if (history.size() == 0)
+        {
+            this.complete = false;
+        }
     }
 
     public void removeTodayFromHistory()
@@ -57,12 +61,6 @@ public class Habit implements Serializable
                 history.remove(e);
             }
         }
-    }
-
-    public void unComplete()
-    {
-        Log.i("info", "uncompleting habit " + this.name);
-        this.complete = false;
     }
 
     public Boolean isComplete()
@@ -163,8 +161,35 @@ public class Habit implements Serializable
     @Override
     public String toString()
     {
-        String completedString = (complete) ? "Complete!" : "Not Complete...";
-        return this.name + " \n " + completedString;
+        if(complete)
+        {
+            return this.name + " \n Completed " + getTodaysCompletionCount().toString() +  " times today!";
+        }
+        else
+        {
+            return this.name + " \n Have not completed today...";
+        }
+    }
+
+    private Integer getTodaysCompletionCount()
+    {
+        int count = 0;
+        for(HabitHistoryElement e : history)
+        {
+            Calendar todayCal = Calendar.getInstance();
+            todayCal.setTime(new Date());
+
+            Calendar historyCal = Calendar.getInstance();
+            historyCal.setTime(e.getDate());
+
+            if(todayCal.get(Calendar.DAY_OF_YEAR) == historyCal.get(Calendar.DAY_OF_YEAR)
+                    && todayCal.get(Calendar.YEAR) == historyCal.get(Calendar.YEAR))
+            {
+                count += 1;
+            }
+        }
+
+        return count;
     }
 
     //TODO: Handle Multiples.
