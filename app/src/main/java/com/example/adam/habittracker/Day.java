@@ -7,12 +7,12 @@ import java.util.Calendar;
 /**
  * Created by Adam on 9/21/2016.
  */
-public class Day implements Serializable
+public class Day
 {
-    private int dayNumber;
+    private Integer dayNumber;
     private String fullName;
 
-    public Day(int dayOfWeek)
+    public Day(Integer dayOfWeek)
     {
         if(dayOfWeek > 0 && dayOfWeek < 8)
         {
@@ -48,7 +48,7 @@ public class Day implements Serializable
         }
     }
 
-    public int getDayNumber()
+    public Integer getDayNumber()
     {
         return dayNumber;
     }

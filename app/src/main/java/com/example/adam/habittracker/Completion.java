@@ -7,31 +7,26 @@ import java.util.Date;
 /**
  * Created by Adam on 9/21/2016.
  */
-public class HabitHistoryElement implements Serializable
+public class Completion
 {
     private Date date;
-    private Boolean complete;
     private String name;
 
-    public HabitHistoryElement(Boolean completed, String name)
+    public Completion(String name)
     {
-        this.complete = completed;
         this.name = name;
         this.date = new Date();
     }
 
     public String toString()
     {
-        String completedString = (complete) ? " completed " : " incomplete ";
-        return this.name + completedString + "on " + new SimpleDateFormat("EEEE, d MMMM, yyyy, hh:mm aa").format(date);
+        return this.name + " completed on " + new SimpleDateFormat("EEEE, d MMMM, yyyy, hh:mm aa").format(date);
     }
 
     public Date getDate()
     {
         return date;
     }
-
-
 
     @Override
     public boolean equals(Object o)
@@ -45,13 +40,9 @@ public class HabitHistoryElement implements Serializable
             return false;
         }
 
-        HabitHistoryElement that = (HabitHistoryElement) o;
+        Completion that = (Completion) o;
 
         if (date != null ? !date.equals(that.date) : that.date != null)
-        {
-            return false;
-        }
-        if (complete != null ? !complete.equals(that.complete) : that.complete != null)
         {
             return false;
         }
@@ -63,7 +54,6 @@ public class HabitHistoryElement implements Serializable
     public int hashCode()
     {
         int result = date != null ? date.hashCode() : 0;
-        result = 31 * result + (complete != null ? complete.hashCode() : 0);
         result = 31 * result + (name != null ? name.hashCode() : 0);
         return result;
     }

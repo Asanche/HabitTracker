@@ -10,62 +10,33 @@ import java.util.Date;
 /**
  * Created by Adam on 9/21/2016.
  */
-public class Habit implements Serializable
+public class Habit
 {
     private Date creationDate;
     private String name;
     private ArrayList<Day> days;
-    private ArrayList<HabitHistoryElement> history;
-    private Boolean complete = false;
+    private ArrayList<Completion> history;
 
     public Habit(String name, ArrayList<Day> days)
     {
         this.days = days;
         this.name = name;
         this.creationDate = new Date();
-        history = new ArrayList<HabitHistoryElement>();
+        history = new ArrayList<Completion>();
     }
 
-    public void complete()
+    public ArrayList<Completion> getHistory()
     {
-        Log.i("info", "completing habit " + this.name);
-        this.complete = true;
-        addToHistory();
-    }
-
-    private void addToHistory()
-    {
-        history.add(new HabitHistoryElement(this.complete, this.name));
-    }
-
-    public void removeFromHistory(HabitHistoryElement historyElement)
-    {
-        history.remove(historyElement);
-        if (history.size() == 0)
+        if(history == null)
         {
-            this.complete = false;
+            history = new ArrayList<Completion>();
         }
+        return history;
     }
 
-    public void removeTodayFromHistory()
+    public ArrayList<Day> getDays()
     {
-        Calendar todayCal = Calendar.getInstance();
-        todayCal.setTime(new Date());
-
-        for(HabitHistoryElement e : history)
-        {
-            Calendar histCal = Calendar.getInstance();
-            todayCal.setTime(e.getDate());
-            if(histCal.DATE == todayCal.DATE)
-            {
-                history.remove(e);
-            }
-        }
-    }
-
-    public Boolean isComplete()
-    {
-        return this.complete;
+        return days;
     }
 
     public Date getCreationDate()
@@ -78,43 +49,33 @@ public class Habit implements Serializable
         return name;
     }
 
-    public void setName(String name)
+    private Integer getTodaysCompletionCount()
     {
-        this.name = name;
-    }
-
-    public ArrayList<HabitHistoryElement> getHistory()
-    {
-        if(history == null)
+        int count = 0;
+        for(Completion e : history)
         {
-            history = new ArrayList<HabitHistoryElement>();
-        }
-        return history;
-    }
+            Calendar todayCal = Calendar.getInstance();
+            todayCal.setTime(new Date());
 
-    public ArrayList<Day> getDays()
-    {
-        return days;
-    }
+            Calendar historyCal = Calendar.getInstance();
+            historyCal.setTime(e.getDate());
 
-    public String daysToString()
-    {
-        String daysString = new String();
-
-        for(Day day : days)
-        {
-            daysString +=(day.getFullName() + ", ");
+            if(todayCal.get(Calendar.DAY_OF_YEAR) == historyCal.get(Calendar.DAY_OF_YEAR)
+                    && todayCal.get(Calendar.YEAR) == historyCal.get(Calendar.YEAR))
+            {
+                count += 1;
+            }
         }
 
-        return daysString.substring(0, daysString.length() - 2);
+        return count;
     }
 
-    public Integer getCompletions()
+    public Integer getCompletionCount()
     {
         return this.history.size();
     }
 
-    public Integer getIncompletes()
+    public Integer getIncompleteCount()
     {
         Calendar createdCal = Calendar.getInstance();
         createdCal.setTime(this.creationDate);
@@ -128,7 +89,7 @@ public class Habit implements Serializable
         int incompletes = 0;
         for(Calendar day : daysSinceCreation)
         {
-            for(HabitHistoryElement e : history)
+            for(Completion e : history)
             {
                 Calendar eCal = Calendar.getInstance();
                 eCal.setTime(e.getDate());
@@ -139,6 +100,27 @@ public class Habit implements Serializable
             }
         }
         return incompletes;
+    }
+
+    public void complete()
+    {
+        Log.i("info", "completing habit " + this.name);
+        addToHistory();
+    }
+
+    private void addToHistory()
+    {
+        history.add(new Completion(this.name));
+    }
+
+    public void removeFromHistory(Completion completion)
+    {
+        history.remove(completion);
+    }
+
+    public Boolean isComplete()
+    {
+        return (getTodaysCompletionCount() > 0);
     }
 
     private ArrayList<Calendar> daysFromTo(Calendar to, Calendar from)
@@ -158,10 +140,22 @@ public class Habit implements Serializable
         return calsList;
     }
 
+    public String daysToString()
+    {
+        String daysString = new String();
+
+        for(Day day : days)
+        {
+            daysString +=(day.getFullName() + ", ");
+        }
+
+        return daysString.substring(0, daysString.length() - 2);
+    }
+
     @Override
     public String toString()
     {
-        if(complete)
+        if(isComplete())
         {
             return this.name + " \n Completed " + getTodaysCompletionCount().toString() +  " times today!";
         }
@@ -171,28 +165,6 @@ public class Habit implements Serializable
         }
     }
 
-    private Integer getTodaysCompletionCount()
-    {
-        int count = 0;
-        for(HabitHistoryElement e : history)
-        {
-            Calendar todayCal = Calendar.getInstance();
-            todayCal.setTime(new Date());
-
-            Calendar historyCal = Calendar.getInstance();
-            historyCal.setTime(e.getDate());
-
-            if(todayCal.get(Calendar.DAY_OF_YEAR) == historyCal.get(Calendar.DAY_OF_YEAR)
-                    && todayCal.get(Calendar.YEAR) == historyCal.get(Calendar.YEAR))
-            {
-                count += 1;
-            }
-        }
-
-        return count;
-    }
-
-    //TODO: Handle Multiples.
     @Override
     public boolean equals(Object o)
     {
@@ -219,11 +191,8 @@ public class Habit implements Serializable
         {
             return false;
         }
-        if (history != null ? !history.equals(habit.history) : habit.history != null)
-        {
-            return false;
-        }
-        return complete != null ? complete.equals(habit.complete) : habit.complete == null;
+
+        return history != null ? history.equals(habit.history) : habit.history == null;
 
     }
 
@@ -234,7 +203,6 @@ public class Habit implements Serializable
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (days != null ? days.hashCode() : 0);
         result = 31 * result + (history != null ? history.hashCode() : 0);
-        result = 31 * result + (complete != null ? complete.hashCode() : 0);
         return result;
     }
 }
