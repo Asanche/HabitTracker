@@ -26,6 +26,13 @@ public class HabitHistoryElement implements Serializable
         return this.name + completedString + "on " + new SimpleDateFormat("EEEE, d MMMM yyyy").format(date);
     }
 
+    public Date getDate()
+    {
+        return date;
+    }
+
+
+
     @Override
     public boolean equals(Object o)
     {

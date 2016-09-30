@@ -4,6 +4,7 @@ import android.util.Log;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -42,6 +43,22 @@ public class Habit implements Serializable
         history.remove(historyElement);
     }
 
+    public void removeTodayFromHistory()
+    {
+        Calendar todayCal = Calendar.getInstance();
+        todayCal.setTime(new Date());
+
+        for(HabitHistoryElement e : history)
+        {
+            Calendar histCal = Calendar.getInstance();
+            todayCal.setTime(e.getDate());
+            if(histCal.DATE == todayCal.DATE)
+            {
+                history.remove(e);
+            }
+        }
+    }
+
     public void unComplete()
     {
         Log.i("info", "uncompleting habit " + this.name);
@@ -58,11 +75,6 @@ public class Habit implements Serializable
         return creationDate;
     }
 
-    public void setCreationDate(Date creationDate)
-    {
-        this.creationDate = creationDate;
-    }
-
     public String getName()
     {
         return name;
@@ -75,6 +87,10 @@ public class Habit implements Serializable
 
     public ArrayList<HabitHistoryElement> getHistory()
     {
+        if(history == null)
+        {
+            history = new ArrayList<HabitHistoryElement>();
+        }
         return history;
     }
 
@@ -93,6 +109,55 @@ public class Habit implements Serializable
         }
 
         return daysString.substring(0, daysString.length() - 2);
+    }
+
+    public Integer getCompletions()
+    {
+        return this.history.size();
+    }
+
+    public Integer getIncompletes()
+    {
+        Calendar createdCal = Calendar.getInstance();
+        createdCal.setTime(this.creationDate);
+
+        Calendar todayCal = Calendar.getInstance();
+        todayCal.setTime(new Date());
+
+        //Build List of Days from creation to today
+        ArrayList<Calendar> daysSinceCreation = daysFromTo(todayCal, createdCal);
+
+        int incompletes = 0;
+        for(Calendar day : daysSinceCreation)
+        {
+            for(HabitHistoryElement e : history)
+            {
+                Calendar eCal = Calendar.getInstance();
+                eCal.setTime(e.getDate());
+                if(eCal.get(Calendar.DAY_OF_WEEK) == day.get(Calendar.DAY_OF_WEEK))
+                {
+                    incompletes += 1;
+                }
+            }
+        }
+        return incompletes;
+    }
+
+    private ArrayList<Calendar> daysFromTo(Calendar to, Calendar from)
+    {
+        ArrayList<Calendar> calsList = new ArrayList<Calendar>();
+        while(from.getTimeInMillis()< to.getTimeInMillis())
+        {
+            for(Day day : days)
+            {
+                if(day.getDayNumber() == from.get(Calendar.DAY_OF_WEEK))
+                {
+                    calsList.add(from);
+                }
+            }
+            from.set(from.DAY_OF_YEAR, from.get(Calendar.DAY_OF_YEAR) + 1);
+        }
+        return calsList;
     }
 
     @Override

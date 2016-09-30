@@ -159,8 +159,8 @@ public class MainActivity extends AppCompatActivity
             @Override
             public boolean onItemLongClick(AdapterView<?>adapter, View v, int position, long id)
             {
-                Habit selectedHabit = (Habit)adapter.getItemAtPosition(position);
-                selectedHabit.unComplete();
+                contextHabit = (Habit)adapter.getItemAtPosition(position);
+                contextHabit.unComplete();
 
                 openHabitHistory();
                 return true;

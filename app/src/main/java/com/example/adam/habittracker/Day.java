@@ -48,6 +48,11 @@ public class Day implements Serializable
         }
     }
 
+    public int getDayNumber()
+    {
+        return dayNumber;
+    }
+
     public static ArrayList<Day> getMultipleDays(ArrayList<Integer> daysOfWeek)
     {
         ArrayList<Day> days = new ArrayList<Day>();
