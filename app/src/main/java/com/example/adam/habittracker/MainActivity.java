@@ -1,6 +1,7 @@
 package com.example.adam.habittracker;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,8 +27,6 @@ public class MainActivity extends AppCompatActivity
 
     private ArrayAdapter<Habit> habitListAdapter;
 
-    private Activity mainActivity = this;
-
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -46,8 +45,7 @@ public class MainActivity extends AppCompatActivity
     protected void onResume()
     {
         super.onResume();
-        habitsController.updateHabits();
-        habitListAdapter.notifyDataSetChanged();
+        upDateHabitList();
     }
 
     @Override
@@ -74,7 +72,7 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    public void init()
+    private void init()
     {
         Log.i("trace", "MainLayoutController init");
 
@@ -96,9 +94,9 @@ public class MainActivity extends AppCompatActivity
         habitListView.setAdapter(habitListAdapter);
     }
 
-    private void setHabitClickEvents(final ListView canCompleteHabitListView)
+    private void setHabitClickEvents(final ListView habitListView)
     {
-        canCompleteHabitListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        habitListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
             @Override
             public void onItemClick(AdapterView<?>adapter, View v, int position, long id)
@@ -106,12 +104,11 @@ public class MainActivity extends AppCompatActivity
                 Habit selectedHabit = (Habit)adapter.getItemAtPosition(position);
                 selectedHabit.complete();
 
-                habitsController.updateHabits();
-                habitListAdapter.notifyDataSetChanged();
+                upDateHabitList();
             }
         });
 
-        canCompleteHabitListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener()
+        habitListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener()
         {
             @Override
             public boolean onItemLongClick(AdapterView<?>adapter, View v, int position, long id)
@@ -134,6 +131,13 @@ public class MainActivity extends AppCompatActivity
 
         displayedDateElement.setText(new SimpleDateFormat("EEEE, d MMMM, yyyy").format(calendar.getTime()) + "\n");
     }
+
+    private void upDateHabitList()
+    {
+        habitsController.updateHabits();
+        habitListAdapter.notifyDataSetChanged();
+    }
+
 
     public void openHabitHistory(Habit habit)
     {

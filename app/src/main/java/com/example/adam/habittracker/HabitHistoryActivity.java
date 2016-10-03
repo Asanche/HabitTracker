@@ -23,7 +23,7 @@ public class HabitHistoryActivity extends AppCompatActivity
     private Habit habit;
     private ListView historyListView;
     private ArrayAdapter<Completion> historyAdapter;
-    private Completion contextHistory;
+    private Completion contextCompletion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -41,7 +41,7 @@ public class HabitHistoryActivity extends AppCompatActivity
                                     ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
         AdapterView.AdapterContextMenuInfo acmi = (AdapterView.AdapterContextMenuInfo) menuInfo;
-        contextHistory = (Completion)((ListView)v).getItemAtPosition(acmi.position);
+        contextCompletion = (Completion)((ListView)v).getItemAtPosition(acmi.position);
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.history_context, menu);
     }
@@ -51,17 +51,17 @@ public class HabitHistoryActivity extends AppCompatActivity
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         switch (item.getItemId()) {
             case R.id.deleteHistory:
-                Log.i("info", "History for " + habit.getName() + " on " + contextHistory.getDate().toString() + " selected for uncomplete.");
+                Log.i("info", "History for " + habit.getName() + " on " + contextCompletion.getDate().toString() + " selected for uncomplete.");
 
                 Calendar contextCal = Calendar.getInstance();
-                contextCal.setTime(contextHistory.getDate());
+                contextCal.setTime(contextCompletion.getDate());
 
                 Calendar todayCal = Calendar.getInstance();
                 todayCal.setTime(new Date());
 
                 Log.i("info", habit.isComplete().toString());
 
-                habit.removeFromHistory(contextHistory);
+                habit.removeFromHistory(contextCompletion);
                 historyAdapter.notifyDataSetChanged();
                 setStrings();
                 return true;

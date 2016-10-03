@@ -155,6 +155,7 @@ public class Habit
     @Override
     public String toString()
     {
+
         if(isComplete())
         {
             return this.name + " \n Completed " + getTodaysCompletionCount().toString() +  " times today!";

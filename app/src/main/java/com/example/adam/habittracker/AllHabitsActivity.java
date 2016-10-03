@@ -20,13 +20,6 @@ public class AllHabitsActivity extends AppCompatActivity
 
     private Habit contextHabit;
 
-    public void openHabitHistory()
-    {
-        Intent intentHistory = new Intent(this, HabitHistoryActivity.class);
-        habitListController.setHistoryHabit(contextHabit);
-        startActivity(intentHistory);
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -54,7 +47,7 @@ public class AllHabitsActivity extends AppCompatActivity
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         switch (item.getItemId()) {
             case R.id.history:
-                openHabitHistory();
+                openHabitHistory(item.get);
                 return true;
             case R.id.delete:
                 Log.i("info", "Habit " + contextHabit.getName() + "selected for delete.");
@@ -64,5 +57,11 @@ public class AllHabitsActivity extends AppCompatActivity
             default:
                 return super.onContextItemSelected(item);
         }
+    }
+    private void openHabitHistory()
+    {
+        Intent intentHistory = new Intent(this, HabitHistoryActivity.class);
+        habitListController.setHistoryHabit(contextHabit);
+        startActivity(intentHistory);
     }
 }
