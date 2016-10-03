@@ -19,6 +19,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 /**
+ * This is a giant singleton that is in charge of controlling access to the main Habit Lists present
+ * in the app, being the currently active habits for that day in the Main Activity, and all of the
+ * habits, active or not, that is present in the AllHabits Activity.
+ * The class is only instantiable as an instance that it holds as a private variable. Follows the
+ * singleton design pattern.
  * Created by Adam on 9/27/2016.
  */
 public class HabitListController

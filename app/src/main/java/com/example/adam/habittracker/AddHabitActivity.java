@@ -10,6 +10,12 @@ import android.widget.EditText;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+/**
+ * This class is in charge of the "activity_add_habit" layout. This is where the user adds a new
+ * activty, specifying a name, as well as which days of the week that the habit wil occur on, meaning
+ * which days of the week it will be displayed for completion in the Main Activity.
+ */
+
 public class AddHabitActivity extends AppCompatActivity
 {
     private HabitListController habitsController = HabitListController.getInstance();

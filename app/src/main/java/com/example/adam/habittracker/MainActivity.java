@@ -19,6 +19,11 @@ import android.widget.TextView;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+/**
+ * Main activity class. Interacts with Android API to create the main habit list activity (where active
+ * Habits are listed and completed). Shows the "activity_main" layout.
+ */
+
 public class MainActivity extends AppCompatActivity
 {
     private HabitListController habitsController = HabitListController.getInstance();

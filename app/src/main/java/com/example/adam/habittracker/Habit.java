@@ -8,6 +8,9 @@ import java.util.Calendar;
 import java.util.Date;
 
 /**
+ * This class holds all the information of a given habit including the name, creation date and history
+ * of the given habit. It ovverides equals and hashcode so that you can check if ArrayLists of Habits
+ * contain a given habit with identical fields for purposes of removing and adding.
  * Created by Adam on 9/21/2016.
  */
 public class Habit

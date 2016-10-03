@@ -16,6 +16,11 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+/**
+ * This class is responsible for listing the history of a habit, links up with the android API to
+ * display the "activity_habit_history" layout correctly.
+ */
+
 public class HabitHistoryActivity extends AppCompatActivity
 {
     private HabitListController habitListController = HabitListController.getInstance();

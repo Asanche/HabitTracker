@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 /**
+ * This is a simple class that holds the name of a day of the week, and a integer representation
+ * of that day. Habit's hold an ArrayList of these that show which days of the week te particular
+ * habt occurs on. Equals and hashcode once again overridden, as every instance of Monday should be
+ * equivalent.
  * Created by Adam on 9/21/2016.
  */
 public class Day

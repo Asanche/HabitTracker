@@ -5,6 +5,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
+ * A completion exists to hold information about the completion of a habit. I decided to us this, as
+ * opposed to just holding a list of millis to represent time, as it simplifies representing them
+ * as a string in the ListView due to the presence of the toString() override.
  * Created by Adam on 9/21/2016.
  */
 public class Completion

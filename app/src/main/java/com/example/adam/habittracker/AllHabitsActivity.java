@@ -12,6 +12,12 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+/**
+ * This class is in charge of controlling the "activity_all_habits" layout, which is accessed via
+ * the options menu in the Main Activity. It simply shows all of the habits, including inactive ones,
+ * allowing the user to view their history, and delete the habit altogether.
+ */
+
 public class AllHabitsActivity extends AppCompatActivity
 {
     private HabitListController habitListController = HabitListController.getInstance();
