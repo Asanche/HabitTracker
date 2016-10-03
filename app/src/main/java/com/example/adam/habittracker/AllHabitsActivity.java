@@ -47,7 +47,7 @@ public class AllHabitsActivity extends AppCompatActivity
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         switch (item.getItemId()) {
             case R.id.history:
-                openHabitHistory(item.get);
+                openHabitHistory();
                 return true;
             case R.id.delete:
                 Log.i("info", "Habit " + contextHabit.getName() + "selected for delete.");
