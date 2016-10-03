@@ -24,56 +24,60 @@ public class AddHabitActivity extends AppCompatActivity
         {
             public void onClick(View v)
             {
-            ArrayList<Integer> days = new ArrayList<Integer>(0);
+                ArrayList<Integer> days = new ArrayList<Integer>(0);
 
-            CheckBox sundayCB = (CheckBox)findViewById(R.id.sunday);
-            CheckBox mondayCB = (CheckBox)findViewById(R.id.monday);
-            CheckBox tuesdayCB = (CheckBox)findViewById(R.id.tuesday);
-            CheckBox wednesdayCB = (CheckBox)findViewById(R.id.wednesday);
-            CheckBox thrusdayCB = (CheckBox)findViewById(R.id.thursday);
-            CheckBox fridayCB = (CheckBox)findViewById(R.id.friday);
-            CheckBox saturdayCB = (CheckBox)findViewById(R.id.saturday);
+                CheckBox sundayCB = (CheckBox)findViewById(R.id.sunday);
+                CheckBox mondayCB = (CheckBox)findViewById(R.id.monday);
+                CheckBox tuesdayCB = (CheckBox)findViewById(R.id.tuesday);
+                CheckBox wednesdayCB = (CheckBox)findViewById(R.id.wednesday);
+                CheckBox thrusdayCB = (CheckBox)findViewById(R.id.thursday);
+                CheckBox fridayCB = (CheckBox)findViewById(R.id.friday);
+                CheckBox saturdayCB = (CheckBox)findViewById(R.id.saturday);
 
-            EditText nameField = (EditText)findViewById(R.id.habitName);
+                EditText nameField = (EditText)findViewById(R.id.habitName);
 
-            if(sundayCB.isChecked())
-            {
-                days.add(Calendar.SUNDAY);
-            }
+                if(sundayCB.isChecked())
+                {
+                    days.add(Calendar.SUNDAY);
+                }
 
-            if(mondayCB.isChecked())
-            {
-                days.add(Calendar.MONDAY);
-            }
+                if(mondayCB.isChecked())
+                {
+                    days.add(Calendar.MONDAY);
+                }
 
-            if(tuesdayCB.isChecked())
-            {
-                days.add(Calendar.TUESDAY);
-            }
+                if(tuesdayCB.isChecked())
+                {
+                    days.add(Calendar.TUESDAY);
+                }
 
-            if(wednesdayCB.isChecked())
-            {
-                days.add(Calendar.WEDNESDAY);
-            }
+                if(wednesdayCB.isChecked())
+                {
+                    days.add(Calendar.WEDNESDAY);
+                }
 
-            if(thrusdayCB.isChecked())
-            {
-                days.add(Calendar.THURSDAY);
-            }
+                if(thrusdayCB.isChecked())
+                {
+                    days.add(Calendar.THURSDAY);
+                }
 
-            if(fridayCB.isChecked())
-            {
-                days.add(Calendar.FRIDAY);
-            }
+                if(fridayCB.isChecked())
+                {
+                    days.add(Calendar.FRIDAY);
+                }
 
-            if(saturdayCB.isChecked())
-            {
-                days.add(Calendar.SATURDAY);
-            }
+                if(saturdayCB.isChecked())
+                {
+                    days.add(Calendar.SATURDAY);
+                }
 
-            Habit newHabit = new Habit(nameField.getText().toString(), Day.getMultipleDays(days));
-            habitsController.addHabit(newHabit);
-            finish();
+                //Check if any days were selected and a name was inputted.
+                if (days.size() > 0 && days.size() < 8 && nameField.getText().toString().length() > 0)
+                {
+                    Habit newHabit = new Habit(nameField.getText().toString(), Day.getMultipleDays(days));
+                    habitsController.addHabit(newHabit);
+                    finish();
+                }
             }
         });
     }
